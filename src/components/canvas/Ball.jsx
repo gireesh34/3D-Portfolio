@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef } from "react";
+import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   Decal,
@@ -9,7 +9,6 @@ import {
 } from "@react-three/drei";
 
 import CanvasLoader from "../Loader";
-import { initializeWebGL, disposeWebGL } from '../../utils/webglUtils';
 
 const Ball = (props) => {
   const [decal] = useTexture([props.imgUrl]);
@@ -39,35 +38,20 @@ const Ball = (props) => {
 };
 
 const BallCanvas = ({ icon }) => {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const gl = initializeWebGL(canvas);
-
-    // Perform WebGL rendering here
-
-    return () => {
-      disposeWebGL();
-    };
-  }, []);
-
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <canvas ref={canvasRef} id="ballCanvas" style={{ display: 'none' }}></canvas>
-      <Canvas
-        frameloop='demand'
-        dpr={[1, window.devicePixelRatio]}
-        gl={{ preserveDrawingBuffer: true }}
-        style={{ width: '100%', height: '100%' }}
-      >
-        <Suspense fallback={<CanvasLoader />}>
-          <OrbitControls enableZoom={false} />
-          <Ball imgUrl={icon} />
-        </Suspense>
-        <Preload all />
-      </Canvas>
-    </div>
+    <Canvas
+      frameloop='demand'
+      dpr={[1, window.devicePixelRatio]}
+      gl={{ preserveDrawingBuffer: true }}
+      style={{ width: '100%', height: '100%' }}
+    >
+      <Suspense fallback={<CanvasLoader />}>
+        <OrbitControls enableZoom={false} />
+        <Ball imgUrl={icon} />
+      </Suspense>
+
+      <Preload all />
+    </Canvas>
   );
 };
 

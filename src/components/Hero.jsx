@@ -1,52 +1,65 @@
+"use client";
 import { motion } from "framer-motion";
-import { styles } from "../styles";
-import { ComputersCanvas } from "./canvas";
-import herobg from '../assets/herobg.png';
-
-
+import image from '../assets/programmer-working.png';
+//import { ComputersCanvas } from "./canvas";
+//import herobg from '../assets/herobg.png';
+import React from 'react'
+import { SparklesIcon } from '@heroicons/react/24/solid';
+import { slideInFromLeft, slideInFromRight, slideInFromTop } from '../utils/motion';
 const Hero = () => {
-  
   return (
-    <section className={`relative w-full h-screen mx-auto`} style={{ backgroundImage: `url(${herobg})`, backgroundSize: 'cover', backgroundPosition: 'center' }} >
-      
-      <div className={`${styles.paddingX} absolute inset-0 top-[60px] max-w-7xl mx-auto flex flex-row items-start gap-5`}>
-        <div className="flex flex-col justify-center items-center mt-5">
-          <div className="w-5 h-5 rounded-full bg-[violet]" />
-          <div className="w-1 sm:h-80 h-40 violet-gradient" />
-        </div>
-
-        <div>
-          <h1 className={`${styles.heroHeadText} text-white`}>
-              Hi, I'm <span className="text-[violet]">Gireesh</span>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      className="flex flex-row items-center justify-center px-20 mt-40 w-full z-[20]"
+    >
+      <div className="h-full w-full flex flex-col gap-5 justify-center m-auto text-start">
+        <motion.div
+          variants={slideInFromTop}
+          className="Welcome-box py-[8px] px-[7px] border border-[#7042f88b] opacity-[0.9]"
+        >
+            
+          <SparklesIcon className="text-[#b49bff] mr-[10px] h-5 w-5" />
+          <h1 className="Welcome-text text-[13px]">
+            Fullstack Developer
           </h1>
-          <p className={`${styles.heroSubText} mt-2 text-white`}>
-            I develop 3D visuals, user <br className="sm:block hidden" />
-            interfaces and web applications
-          </p>
-        </div>
+        </motion.div>
+
+        <motion.div
+          variants={slideInFromLeft(0.5)}
+          className="flex flex-col gap-6 mt-6 text-6xl font-bold text-white max-w-[600px] w-auto h-auto"
+        >
+          <span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
+              {" "}
+              Gireesh Bogisetti{" "}
+            </span>
+            project exprience
+          </span>
+        </motion.div>
+
+        <motion.p
+          variants={slideInFromLeft(0.8)}
+          className="text-lg text-gray-400 my-5 max-w-[600px]"
+        >
+          I&apos;m a Full Stack Software Engineer with experience in Website,
+          Mobile, and Software development. Check out my projects and skills.
+        </motion.p>
+        <motion.a
+          variants={slideInFromLeft(1)}
+          className="py-2 button-primary text-center text-white cursor-pointer rounded-lg max-w-[200px]"
+        >
+          Learn More!
+        </motion.a>
       </div>
-      <ComputersCanvas />
-      <div className='absolute xs:bottom-2 bottom-2 w-full flex justify-center items-center'>
-        <a href='#about'>
-          <div className='w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2'>
-            <motion.div
-              animate={{
-                y: [0, 26, 0],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                repeatType: "loop",
-              }}
-              className='w-3 h-3 rounded-full bg-white mb-1'
-            />
-          </div>
-        </a>
-        <div>
-        </div>
-      </div>
-    </section>
+
+      <motion.div
+        variants={slideInFromRight(0.8)}
+        className="w-full h-full flex justify-center items-center"
+      >
+      <img src={image} alt="Programmer Working" height={650} width={650} />
+      </motion.div>
+    </motion.div>
   );
 };
-
 export default Hero;

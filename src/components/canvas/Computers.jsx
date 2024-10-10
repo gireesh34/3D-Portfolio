@@ -4,6 +4,17 @@ import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 
 import CanvasLoader from "../Loader";
 
+const isWebGLSupported = () => {
+  try {
+    const canvas = document.createElement('canvas');
+    return !!window.WebGLRenderingContext && (
+      canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+    );
+  } catch (e) {
+    return false;
+  }
+};
+
 const Computers = ({ isMobile }) => {
   const computer = useGLTF("./desktop_pc/scene.gltf");
 
@@ -21,7 +32,7 @@ const Computers = ({ isMobile }) => {
       <pointLight intensity={1} />
       <primitive
         object={computer.scene}
-        scale={isMobile ? 0.45 : 1}
+        scale={isMobile ? 0.3 : 1}
         position={isMobile ? [0, -1.5, -0.75] : [0, -4, -1.5]}
         rotation={[-0.01, -0.2, -0.1]}
       />
@@ -53,13 +64,22 @@ const ComputersCanvas = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log('isMobile:', isMobile);
+    console.log('WebGL Supported:', isWebGLSupported());
+
+    if (!isWebGLSupported()) {
+      console.error('WebGL is not supported on this device.');
+    }
+  }, [isMobile]);
+
   return (
     <Canvas
       frameloop='demand'
       shadows
-      dpr={[1, 2]}
+      dpr={[1, Math.min(window.devicePixelRatio, 2)]}
       camera={{ position: [26, 3, 5], fov: 25 }}
-      gl={{ preserveDrawingBuffer: true }}
+      gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
     >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls

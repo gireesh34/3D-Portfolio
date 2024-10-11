@@ -63,6 +63,9 @@ body {
     rgba(113, 47, 255, 0.12);
   box-shadow: inset 0 0 12px #bf97ff3d;
 }
+
+
+
 .black-gradient {
   background: #000000; /* fallback for old browsers */
   background: -webkit-linear-gradient(
